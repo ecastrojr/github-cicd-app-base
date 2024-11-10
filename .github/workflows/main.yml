@@ -14,10 +14,12 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
+    - name: Obter o código do projeto
+      uses: actions/checkout@v4
+
     - name: Change directory to app/
       run: cd app/
-      
-    - uses: actions/checkout@v4
+
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v4
       with:

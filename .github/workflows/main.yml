@@ -5,6 +5,39 @@ on:
     branches: ["feature/Kubernetes-github-actions"]
   workflow_dispatch:
 jobs:
+  teste:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x, 22.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    - name: Obter o código do projeto
+      uses: actions/checkout@v4
+
+    - name: Change directory to app/
+      run: |
+        pwd
+        cd app/
+        pwd
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        cache-dependency-path: 'app/package-lock.json'
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+
+    - run: npm ci
+      working-directory: ./app
+    - run: npm run build --if-present
+      working-directory: ./app
+    - run: npm test
+      working-directory: ./app  
+
+
   ci:
     runs-on: ubuntu-latest
     steps:
@@ -44,10 +77,7 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: 🛠️ Configurar o kubectl
-        uses: azure/cli@v2
-        with:
-          azcliversion: latest
-          inlineScript: |
+        run: |
             az account show
             az aks get-credentials --resource-group rg-aks-dio --name cluster-aks-dio
 

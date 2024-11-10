@@ -3,3 +3,16 @@ app/node_modules
 *.DS_Store
 *tgz
 junit.xml
+
+# Terraform
+*.tfstate
+*.tfstate.*backup
+*.tfstate.lock.info
+.terraform/
+*.hcl
+plan
+plano
+*.tfplan
+
+#AKS
+azurek8s

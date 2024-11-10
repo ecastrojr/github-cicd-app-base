@@ -2,7 +2,7 @@ name: CI-CD 🚀
 
 on:
   push:
-    branches: ["main"]
+    branches: ["feature/Kubernetes-github-actions"]
   workflow_dispatch:
 jobs:
   ci:
